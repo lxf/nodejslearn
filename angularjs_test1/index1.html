@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<body>
+
+	<div ng-app="myApp" ng-init="firstName='John';age='10'" ng-controller="namesCtrl">
+
+		<p>The name is <span ng-bind="firstName"></span></p>
+		<p>the age is <span ng-bind="age"></span></p>
+		<div ng-init="names=[{name:'Jani',country:'1China'},{name:'Hel',country:'Japan'}]">
+			<p>
+				<ul>
+					<li ng-repeat="x in names | orderBy:'country'">{{x.name}}</li>
+				</ul>
+			</p>
+		</div>
+		<div>
+			<p>Name:
+				<input type="text" ng-model="name">
+			</p>
+			<p>{{name}}</p>
+		</div>
+		{{10*10}}
+		<p ng-init="A=1;B=0">
+			<span>{{A/B}}</span>
+		</p>
+		<p>过滤数据</p>
+		<ul>
+			<li ng-repeat="x in filternames | orderBy:'country'">
+				{{ x.name + ', ' + x.country }}
+			</li>
+		</ul>
+		<p>按条件过滤数据</p>
+		<input type="text" ng-model="test">
+		<ul>
+			<li ng-repeat="x in filternames | filter:test | orderBy:'country'">
+				{{ (x.name | uppercase) + ', ' + x.country }}
+			</li>
+		</ul>
+
+		<p>是否有效</p>
+		<p>
+			<button ng-disabled="mySwitch">Click Me!</button>
+		</p>
+
+		<p>
+			<input type="checkbox" ng-model="mySwitch">Button
+		</p>
+		<p>
+			事件
+		</p>
+		<button ng-click="count = count + 1">Click me!</button>
+
+		<p>{{ count }}</p>
+	</div>
+	<script>
+		var app=angular.module('myApp',[]);
+		app.controller('namesCtrl', function($scope) {
+			 $scope.count = 0;
+			$scope.filternames = [
+				{name:'Jani',country:'Norway'},
+				{name:'Hege',country:'Sweden'},
+				{name:'Kai',country:'1Denmark'}
+			];
+		});
+	</script>
+</body>
+
+</html>

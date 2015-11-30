@@ -34,7 +34,7 @@ app.get('/', function (req, res) {
 });
 
 //通配符，匹配/test/之后的任意URL
-app.get('/test/*', function (req, res,next) {
+app.get('/test/*', function (req, res, next) {
     // res.send(req.originalUrl);//req.originalUrl获取当前URL,当要用next的时候当然要注释掉这句结束响应的代码
 	req.temp = "我是上一个路由传来的数据";
 	next();//转移给下一个路由
@@ -89,7 +89,31 @@ app.get('/:id', function (req, res) {
 	});
 });
 
+//另一种方式，学下路由
 
+// 建立 Router
+var router = express.Router();
+//写一个每次请求路由都处理的逻辑
+router.use(function(req,res,next){
+	console.log(new Date());
+	next();	
+});
+
+router.get('/hello', function (req, res) {
+	res.send('这是新的router!');
+});
+
+//http://localhost:8000/router/hello/snail
+router.get('/hello/:name',function(req,res){
+	res.send('hello '+req.params.name+'!');	
+});
+
+// 另一个路由
+router.get('/about', function (req, res) {
+	res.send('关于页面!');
+});
+
+app.use('/router',router);
 
 var server = app.listen(8000, function () {
 	console.log('当前文件的所在目录:' + __dirname);
